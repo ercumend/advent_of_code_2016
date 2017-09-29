@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  </head>
+  <body>
+      <div class="row">
+          <div>. </div>
+      </div>
+    <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10">
+                    <div class="form-group">
+                        <label for="Puzzle Input">Puzzle Input:</label>
+                        <textarea class="form-control" rows="5" id="puzzleInputText"></textarea>
+                        <button type="button" class="btn btn-primary" id="btnStart">Start</button>
+                        <br>
+                        <label for="Answer">Answer:</label>
+                        <input class="form-control"  id="puzzleAnswer">
+                        
+                    </div>
+            </div>
+            <div class="col-sm-1"></div>
+            
+    </div>
+  
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+
+    <script>
+        $(function () {
+
+            var eos = (function () {
+                var self = {};
+
+                return self;
+            })();
+
+            eos.Day2 = (function () {
+                var self = {};
+                var lines;
+
+                var items = [
+                    [1, 2, 3],
+                    [4, 5, 6],
+                    [7, 8, 9]
+                ];
+
+                var pos = { x: 1, y: 1 };
+                var output = "";
+
+
+                self.firstPart = function () {
+
+                    $("#btnStart").click(function () {
+                        lines = $("#puzzleInputText").val().split('\n');
+                        //console.log(lines);
+                        for (var lineIdx = 0; lineIdx < lines.length; lineIdx++) {
+                            var lineDirective = lines[lineIdx].split('');
+                            
+                            if (lineDirective.length > 0) {
+                                for (var chIdx = 0; chIdx < lineDirective.length; chIdx++) {
+                                    var directive = lineDirective[chIdx];
+
+                                    switch (directive) {
+                                        case "U":
+                                            pos.y = pos.y - 1;
+                                            pos.y = pos.y < 0 ? 0 : pos.y;
+                                            break;
+                                        case "D":
+                                            pos.y = pos.y + 1;
+                                            pos.y = pos.y > 2 ? 2 : pos.y;
+                                            break;
+                                        case "L":
+                                            pos.x = pos.x - 1;
+                                            pos.x = pos.x < 0 ? 0 : pos.x;
+                                            break;
+                                        case "R":
+                                            pos.x = pos.x + 1;
+                                            pos.x = pos.x > 2 ? 2 : pos.x;
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+
+                                }
+                                output = output + items[pos.y][pos.x];
+                            }
+
+
+                        }
+                        $("#puzzleAnswer").val(output);
+                    })
+
+                };
+
+                return self;
+            })();
+
+            eos.Day2.firstPart();
+        });
+    </script>
+            
+  </body>
+</html>
