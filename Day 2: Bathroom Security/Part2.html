@@ -76,23 +76,15 @@
 
                                     switch (directive) {
                                         case "U":
-                                            // pos.y = pos.y - 1;
-                                            // pos.y = items[pos.y][pos.x] == "." ? pos.y + 1 : pos.y;
                                             pos.y = items[pos.y - 1][pos.x] != "." ? pos.y - 1 : pos.y;
                                             break;
                                         case "D":
-                                            // pos.y = pos.y + 1;
-                                            // pos.y = items[pos.y][pos.x] == "." ? pos.y - 1 : pos.y;
                                             pos.y = items[pos.y + 1][pos.x] != "." ? pos.y + 1 : pos.y;
                                             break;
                                         case "L":
-                                            // pos.x = pos.x - 1;
-                                            // pos.x = items[pos.y][pos.x] == "." ? pos.x + 1 : pos.x;
                                             pos.x = items[pos.y][pos.x - 1] != "." ? pos.x - 1 : pos.x;
                                             break;
                                         case "R":
-                                            // pos.x = pos.x + 1;
-                                            // pos.x = items[pos.y][pos.x] == "." ? pos.x - 1 : pos.x;
                                             pos.x = items[pos.y][pos.x + 1] != "." ? pos.x + 1 : pos.x;
                                             break;
 
