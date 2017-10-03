@@ -22,7 +22,10 @@
                         </textarea>
                         <button type="button" class="btn btn-primary" id="btnStart">Start</button>
                         <br>
-                        <label for="Answer">possible triangle:</label>
+                        <label for="Answer">Room name to search:</label>
+                        <input class="form-control"  id="roomToSearch">
+                        <br>
+                        <label for="Answer">Answer:</label>
                         <input class="form-control"  id="puzzleAnswer">
                         
                     </div>
@@ -60,6 +63,7 @@
                         var regEx = /([a-z|\-]*)([0-9]*)\[([a-z]*)\]/;
                         var idsTotal = 0;
                         var alphabet = '';
+                        var answer ;
                         for (var index = 'a'.charCodeAt(0); index <= 'z'.charCodeAt(0); index++) {
                             alphabet = alphabet + String.fromCharCode(index);
                         }
@@ -89,6 +93,9 @@
                             }
 
                             var roomchecksum = charcounts.sort().slice(0,5).join('').replace(/[0-9]*/g,'');
+                            
+                            var roomToSearch = $('#roomToSearch').val().toLowerCase().replace(/[^a-z]*/g,'');
+
                             if (storedchecksum == roomchecksum){
                                 idsTotal = idsTotal + parseInt(roomid);
                                 encryptedChars = roomname.split('');
@@ -97,6 +104,8 @@
                                     var element = encryptedChars[index];
                                     var decryptedChar  = alphabet.charAt((alphabet.indexOf(element) + parseInt(roomid)) % 26)
                                     decryptedRoomName = decryptedRoomName +  (element != '-' ? decryptedChar : '-');
+                                    if(roomToSearch == decryptedRoomName.replace(/[^a-z]*/g,''))
+                                        answer = roomid;
                                     
                                 }
                                 console.log('real room',roomname, roomid,roomchecksum,storedchecksum,decryptedRoomName);
@@ -107,7 +116,7 @@
 
 
                         }
-                        $("#puzzleAnswer").val(idsTotal);
+                        $("#puzzleAnswer").val(answer);
                     })
 
                 };
