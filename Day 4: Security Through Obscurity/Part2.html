@@ -15,7 +15,7 @@
     <div class="row">
             <div class="col-sm-1"></div>
             <div class="col-sm-10">
-                    <h3>Day 4 - Part1 </h3>
+                    <h3>Day 4 - Part2 </h3>
                     <div class="form-group">
                         <label for="Puzzle Input">Puzzle Input:</label>
                         <textarea class="form-control" rows="5" id="puzzleInputText">
@@ -59,34 +59,49 @@
                         lines = $("#puzzleInputText").val().split('\n');
                         var regEx = /([a-z|\-]*)([0-9]*)\[([a-z]*)\]/;
                         var idsTotal = 0;
+                        var alphabet = '';
+                        for (var index = 'a'.charCodeAt(0); index <= 'z'.charCodeAt(0); index++) {
+                            alphabet = alphabet + String.fromCharCode(index);
+                        }
 
                         for (var lineIdx = 0; lineIdx < lines.length; lineIdx++) {
-
                             if(lines[lineIdx].length == 0 ) continue;
                             var match = regEx.exec(lines[lineIdx]);
                             if(match == null ) continue;
-                            
 
-                            roomname = match[1].replace(/-/g,'');
-                            uniqueChars = Array.from(new Set(roomname.split(''))) ;
+
+                            roomname = match[1]
+                            roomnameChars = roomname.replace(/-/g,'');
+                            uniqueChars = Array.from(new Set(roomnameChars.split(''))) ;
                             var charcounts =  [];
 
-                            
+                            // if (match == null){
+                            //     continue;
+                            // }
+
                             roomid = match[2];
                             storedchecksum = match[3];
                             for (var index = 0; index < uniqueChars.length; index++) {
                                 var element = uniqueChars[index];
                                 var regExp = new RegExp(element,'g'); 
-                                var count = 1000 - (roomname.length -roomname.replace(regExp,'').length )
+                                var count = 1000 - (roomnameChars.length -roomnameChars.replace(regExp,'').length )
                                 charcounts.push('0'.repeat(3 - ('' + count).length) + count + element)
                             }
 
                             var roomchecksum = charcounts.sort().slice(0,5).join('').replace(/[0-9]*/g,'');
                             if (storedchecksum == roomchecksum){
                                 idsTotal = idsTotal + parseInt(roomid);
+                                encryptedChars = roomname.split('');
+                                var decryptedRoomName = '';
+                                for (var index = 0; index < encryptedChars.length; index++) {
+                                    var element = encryptedChars[index];
+                                    var decryptedChar  = alphabet.charAt((alphabet.indexOf(element) + parseInt(roomid)) % 26)
+                                    decryptedRoomName = decryptedRoomName +  (element != '-' ? decryptedChar : '-');
+                                    
+                                }
+                                console.log('real room',roomname, roomid,roomchecksum,storedchecksum,decryptedRoomName);
                             }
                             else {
-                                //console.log('decoy data',roomname, roomid,roomchecksum,storedchecksum);
                             }
 
 
